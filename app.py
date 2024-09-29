@@ -1,5 +1,13 @@
 from modules.annotator import generate_annotations
+import sys
+import logging
+import asyncio
 
 if __name__ == '__main__':
-    folder_name = 'images'
-    generate_annotations(folder_name)
+
+    logging.basicConfig(level=logging.INFO)
+
+    folder_name = sys.argv[1]
+    overwrite = False
+
+    asyncio.run(generate_annotations(folder_name, overwrite))

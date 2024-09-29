@@ -6,9 +6,14 @@ import os
 from datetime import datetime
 
 class Assistant:
-    def __init__(self):
+    def __init__(self, assistant_id=None):
         load_dotenv()
         self.openai_client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+
+        if not assistant_id:
+            self.assistant_id = os.getenv('OPENAI_ASSISTANT_ID')
+        else:
+            self.assistant_id = assistant_id
 
     def get_current_datetime(self):
         """Get the current UTC date and time in ISO format."""
@@ -70,7 +75,8 @@ class Assistant:
 
         return tool_outputs
 
-    def chat_with_assistant(self, assistant_id, question, thread_id=None):
+    def chat_with_assistant(self, question, thread_id=None):
+        assistant_id = self.assistant_id
         thread_id = 'skip'
 
         if thread_id and thread_id != 'skip':
